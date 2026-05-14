@@ -12,5 +12,5 @@ if (manifest.version === pkg.version) {
 }
 
 manifest.version = pkg.version;
-writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n', 'utf8');
+writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
 console.log(`manifest.json: ${manifest.version} (synced from package.json)`);

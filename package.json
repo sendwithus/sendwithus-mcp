@@ -15,13 +15,7 @@
     "sendwithus-mcp": "./dist/index.js"
   },
   "files": ["dist", "README.md"],
-  "keywords": [
-    "mcp",
-    "model-context-protocol",
-    "sendwithus",
-    "email",
-    "templates"
-  ],
+  "keywords": ["mcp", "model-context-protocol", "sendwithus", "email", "templates"],
   "scripts": {
     "dev": "bun run src/index.ts",
     "build": "bun build src/index.ts --target=node --outfile=dist/index.js --banner=\"#!/usr/bin/env node\"",

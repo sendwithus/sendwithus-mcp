@@ -1,14 +1,14 @@
 #!/usr/bin/env node
-import { build } from 'esbuild'
-import { rm, mkdir, readFile, copyFile } from 'node:fs/promises'
-import { resolve } from 'node:path'
+import { copyFile, mkdir, readFile, rm } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { build } from 'esbuild';
 
-const root = resolve(import.meta.dirname, '..')
-const outdir = resolve(root, 'mcpb-dist')
-const { version } = JSON.parse(await readFile(resolve(root, 'package.json'), 'utf8'))
+const root = resolve(import.meta.dirname, '..');
+const outdir = resolve(root, 'mcpb-dist');
+const { version } = JSON.parse(await readFile(resolve(root, 'package.json'), 'utf8'));
 
-await rm(outdir, { recursive: true, force: true })
-await mkdir(outdir, { recursive: true })
+await rm(outdir, { recursive: true, force: true });
+await mkdir(outdir, { recursive: true });
 
 await build({
   entryPoints: [resolve(root, 'src/index.ts')],
@@ -26,7 +26,7 @@ await build({
     js: "import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);",
   },
   logLevel: 'info',
-})
+});
 
-await copyFile(resolve(root, 'manifest.json'), resolve(outdir, 'manifest.json'))
-console.log(`mcpb bundle ready in ${outdir}`)
+await copyFile(resolve(root, 'manifest.json'), resolve(outdir, 'manifest.json'));
+console.log(`mcpb bundle ready in ${outdir}`);
