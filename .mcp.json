@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "sendwithus-latest": {
+      "command": "npx",
+      "args": ["-y", "sendwithus-mcp@latest"]
+    },
+    "sendwithus-dev": {
+      "command": "sh",
+      "args": ["-c", "set -a && . ./.env && set +a && bun run dev"]
+    }
+  }
+}
