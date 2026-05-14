@@ -147,3 +147,4 @@ vite.config.ts.timestamp-*
 # mcpb bundle output
 mcpb-dist/
 *.mcpb
+.claude/
