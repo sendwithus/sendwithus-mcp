@@ -1,0 +1,55 @@
+{
+  "name": "sendwithus-mcp",
+  "version": "0.0.1",
+  "description": "MCP server wrapping the Sendwithus REST API.",
+  "type": "module",
+  "module": "src/index.ts",
+  "author": "sendwithus",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sendwithus/sendwithus-mcp.git"
+  },
+  "bin": {
+    "sendwithus-mcp": "./dist/index.js"
+  },
+  "files": ["dist", "README.md"],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "sendwithus",
+    "email",
+    "templates"
+  ],
+  "scripts": {
+    "dev": "bun run src/index.ts",
+    "build": "bun build src/index.ts --target=node --outfile=dist/index.js --banner=\"#!/usr/bin/env node\"",
+    "start": "node dist/index.js",
+    "test": "bun test tests/client tests/tools",
+    "test:integration": "bun test tests/integration",
+    "test:all": "bun test",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "inspect": "bunx @modelcontextprotocol/inspector bun run src/index.ts",
+    "mcpb:sync-version": "node scripts/sync-manifest-version.mjs",
+    "mcpb:build": "npm run mcpb:sync-version && node scripts/build-mcpb.mjs",
+    "mcpb:pack": "node scripts/pack-mcpb.mjs",
+    "mcpb": "npm run mcpb:build && npm run mcpb:pack"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@anthropic-ai/mcpb": "^2.1.2",
+    "@biomejs/biome": "^1.9.4",
+    "@types/bun": "^1.1.13",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "bun": ">=1.1.0"
+  }
+}

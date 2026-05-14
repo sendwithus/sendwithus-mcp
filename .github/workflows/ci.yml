@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    name: Lint (Biome)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bunx biome check .
+
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bunx tsc --noEmit
+
+  unit-tests:
+    name: Unit tests (offline)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bun run test
+
+  build:
+    name: Build bundle
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bun run build
+
+  integration-tests:
+    name: Integration tests (live Sendwithus API)
+    # Only run after merge to main, when the SENDWITHUS_API_KEY secret is available.
+    # PRs from forks don't have access to secrets; integration tests would
+    # auto-skip but produce confusingly-green results.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [unit-tests]
+    runs-on: ubuntu-latest
+    env:
+      SENDWITHUS_API_KEY: ${{ secrets.SENDWITHUS_API_KEY }}
+      SENDWITHUS_BASE_URL: ${{ vars.SENDWITHUS_BASE_URL }}
+      # SENDWITHUS_RUN_SENDS / SENDWITHUS_TEST_RECIPIENT are intentionally left
+      # unset so CI never sends real email. Set them locally to exercise the
+      # send/resend/logs tests.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bun run test:integration
