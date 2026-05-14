@@ -4,6 +4,16 @@ An [MCP](https://modelcontextprotocol.io/) server that wraps the [Sendwithus RES
 
 Built with TypeScript, [Bun](https://bun.sh), and the official [`@modelcontextprotocol/sdk`](https://github.com/modelcontextprotocol/typescript-sdk).
 
+## Install
+
+- **npm** — published as [`sendwithus-mcp`](https://www.npmjs.com/package/sendwithus-mcp):
+
+  ```sh
+  npx -y sendwithus-mcp
+  ```
+
+- **MCPB bundle** — grab `sendwithus-mcp-<version>.mcpb` from the [GitHub Releases page](https://github.com/sendwithus/sendwithus-mcp/releases) and drop it into Claude Desktop (or any MCPB-aware host).
+
 ## Tools
 
 Each Sendwithus v1 endpoint is exposed as one MCP tool:
@@ -19,7 +29,7 @@ Each Sendwithus v1 endpoint is exposed as one MCP tool:
 
 ## Configuration
 
-Set `SENDWITHUS_API_KEY` in the environment. Optionally set `SENDWITHUS_BASE_URL` (defaults to `https://api.sendwithus.com/api/v1`).
+Set `SENDWITHUS_API_KEY` in the environment.
 
 ## Use with Claude Desktop
 
@@ -99,7 +109,6 @@ prefixed with `mcp-it-<runId>-` and deletes them in `afterAll`.
 | `SENDWITHUS_API_KEY` | for the suite to actually run | Without it, every integration suite skips cleanly (exit 0) |
 | `SENDWITHUS_RUN_SENDS` | optional | Set to `1`/`true` to enable `send_email`, `resend_email`, `logs_get`, `logs_get_events` |
 | `SENDWITHUS_TEST_RECIPIENT` | required when `SENDWITHUS_RUN_SENDS` is on | Address that receives the one test email per run |
-| `SENDWITHUS_BASE_URL` | optional | Override the API base URL (e.g. for staging) |
 
 Note: customer mutations (`customers_upsert`, `customers_delete`) cannot be performed with
 Sendwithus *test* API keys — the suite detects this and verifies tool round-trip only.

@@ -12,10 +12,19 @@
     "url": "https://github.com/sendwithus/sendwithus-mcp.git"
   },
   "bin": {
-    "sendwithus-mcp": "./dist/index.js"
+    "sendwithus-mcp": "dist/index.js"
   },
-  "files": ["dist", "README.md"],
-  "keywords": ["mcp", "model-context-protocol", "sendwithus", "email", "templates"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "sendwithus",
+    "email",
+    "templates"
+  ],
   "scripts": {
     "dev": "bun run src/index.ts",
     "build": "bun build src/index.ts --target=node --outfile=dist/index.js --banner=\"#!/usr/bin/env node\"",
@@ -27,6 +36,7 @@
     "lint": "biome check .",
     "format": "biome format --write .",
     "inspect": "bunx @modelcontextprotocol/inspector bun run src/index.ts",
+    "prepublishOnly": "bun run typecheck && bun run test && bun run build",
     "mcpb:sync-version": "node scripts/sync-manifest-version.mjs",
     "mcpb:build": "npm run mcpb:sync-version && node scripts/build-mcpb.mjs",
     "mcpb:pack": "node scripts/pack-mcpb.mjs",
